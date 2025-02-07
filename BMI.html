@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>คำนวณ BMI</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="container">
+    <h2 class="text-center mt-5">คำนวณ BMI (ดัชนีมวลกาย)</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form id="bmiForm">
+          <div class="mb-3">
+            <label for="weight" class="form-label">น้ำหนัก (กิโลกรัม)</label>
+            <input type="number" class="form-control" id="weight" placeholder="กรอกน้ำหนัก" required>
+          </div>
+          <div class="mb-3">
+            <label for="height" class="form-label">ส่วนสูง (เซนติเมตร)</label>
+            <input type="number" class="form-control" id="height" placeholder="กรอกส่วนสูง" required>
+          </div>
+          <div class="mb-3">
+            <label for="gender" class="form-label">เพศ</label>
+            <select class="form-select" id="gender">
+              <option value="male">ชาย</option>
+              <option value="female">หญิง</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">คำนวณ BMI</button>
+          <button type="button" class="btn btn-secondary" id="resetButton">รีเซ็ตข้อมูล</button>
+        </form>
+        
+        <p class="mt-4">
+          <strong>คำอธิบายค่า BMI:</strong>
+          <ul>
+            <li><b>ต่ำกว่า 18.5</b>: น้ำหนักต่ำกว่ามาตรฐาน</li>
+            <li><b>18.5 - 24.9</b>: น้ำหนักปกติ</li>
+            <li><b>25 - 29.9</b>: อ้วนเกินไป</li>
+            <li><b>30 ขึ้นไป</b>: อ้วนมาก</li>
+          </ul>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="bmiModal" tabindex="-1" aria-labelledby="bmiModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="bmiModalLabel">ผลลัพธ์ BMI</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="bmiResult">ผลลัพธ์ BMI: --</p>
+          <p id="bmiCategory"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+  <script>
+    // ฟังก์ชันสำหรับคำนวณ BMI
+    document.getElementById('bmiForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      var weight = parseFloat(document.getElementById('weight').value);
+      var height = parseFloat(document.getElementById('height').value) / 100;  // Convert cm to meters
+      var gender = document.getElementById('gender').value;
+
+      if (isNaN(weight) || isNaN(height)) {
+        alert("กรุณากรอกข้อมูลให้ถูกต้อง");
+        return;
+      }
+
+      var bmi = weight / (height * height);
+      var bmiResult = document.getElementById('bmiResult');
+      var bmiCategory = document.getElementById('bmiCategory');
+
+      bmiResult.textContent = "ผลลัพธ์ BMI: " + bmi.toFixed(2);
+
+      if (bmi < 18.5) {
+        bmiCategory.textContent = "น้ำหนักต่ำกว่ามาตรฐาน";
+      } else if (bmi >= 18.5 && bmi < 24.9) {
+        bmiCategory.textContent = "น้ำหนักปกติ";
+      } else if (bmi >= 25 && bmi < 29.9) {
+        bmiCategory.textContent = "อ้วนเกินไป";
+      } else {
+        bmiCategory.textContent = "อ้วนมาก";
+      }
+
+      // แสดง Modal
+      var bmiModal = new bootstrap.Modal(document.getElementById('bmiModal'));
+      bmiModal.show();
+    });
+
+    // ฟังก์ชันสำหรับรีเซ็ตข้อมูล
+    document.getElementById('resetButton').addEventListener('click', function() {
+      document.getElementById('bmiForm').reset();  // รีเซ็ตฟอร์มทั้งหมด
+      document.getElementById('bmiResult').textContent = "ผลลัพธ์ BMI: --"; // รีเซ็ตผลลัพธ์
+      document.getElementById('bmiCategory').textContent = ""; // รีเซ็ตคำแนะนำ
+    });
+  </script>
+
+</body>
+</html>

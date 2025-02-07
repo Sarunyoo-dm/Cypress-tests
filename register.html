@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สมัครสมาชิก</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center mb-4">สมัครสมาชิก</h2>
+
+            <!-- ฟอร์มสมัครสมาชิก -->
+            <form>
+                <!-- ชื่อผู้ใช้ -->
+                <div class="form-group">
+                    <label for="username">ชื่อผู้ใช้</label>
+                    <input type="text" class="form-control" id="username" placeholder="กรุณากรอกชื่อผู้ใช้" required>
+                </div>
+
+                <!-- อีเมล -->
+                <div class="form-group">
+                    <label for="email">อีเมล</label>
+                    <input type="email" class="form-control" id="email" placeholder="กรุณากรอกอีเมล" required>
+                </div>
+
+                <!-- รหัสผ่าน -->
+                <div class="form-group">
+                    <label for="password">รหัสผ่าน</label>
+                    <input type="password" class="form-control" id="password" placeholder="กรุณากรอกรหัสผ่าน" required>
+                </div>
+
+                <!-- ยืนยันรหัสผ่าน -->
+                <div class="form-group">
+                    <label for="confirmPassword">ยืนยันรหัสผ่าน</label>
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="กรุณายืนยันรหัสผ่าน" required>
+                </div>
+
+                <!-- ชื่อเต็ม -->
+                <div class="form-group">
+                    <label for="fullName">ชื่อเต็ม</label>
+                    <input type="text" class="form-control" id="fullName" placeholder="กรุณากรอกชื่อเต็ม" required>
+                </div>
+
+                <!-- หมายเลขโทรศัพท์ -->
+                <div class="form-group">
+                    <label for="phoneNumber">หมายเลขโทรศัพท์</label>
+                    <input type="text" class="form-control" id="phoneNumber" placeholder="กรุณากรอกหมายเลขโทรศัพท์" required>
+                </div>
+
+                <!-- ช่องยอมรับข้อตกลง -->
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="terms" required>
+                    <label class="form-check-label" for="terms">ฉันยอมรับข้อตกลงและเงื่อนไข</label>
+                </div>
+
+                <!-- ปุ่มสมัครสมาชิก -->
+                <button type="submit" class="btn btn-primary btn-block mt-4">สมัครสมาชิก</button>
+
+                <!-- ลิงก์เข้าสู่ระบบ -->
+                <div class="text-center mt-2">
+                    <a href="login.html">มีบัญชีแล้ว? เข้าสู่ระบบ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

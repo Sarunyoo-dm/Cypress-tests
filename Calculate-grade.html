@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คำนวณเกรด</title>
+    <!-- เรียกใช้ Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">ระบบคำนวณเกรดนักเรียน</h2>
+    
+    <!-- ฟอร์มกรอกข้อมูลคะแนน -->
+    <form id="gradeForm">
+        <div class="form-group">
+            <label for="studentName">ชื่อนักเรียน</label>
+            <input type="text" class="form-control" id="studentName" placeholder="กรอกชื่อนักเรียน" required>
+        </div>
+
+        <!-- วิชาคณิตศาสตร์ -->
+        <div class="form-group">
+            <label for="mathScore">คะแนนวิชาคณิตศาสตร์</label>
+            <input type="number" class="form-control" id="mathScore" placeholder="กรอกคะแนนวิชาคณิตศาสตร์ (0-100)" min="0" max="100" required>
+        </div>
+
+        <!-- วิชาวิทยาศาสตร์ -->
+        <div class="form-group">
+            <label for="scienceScore">คะแนนวิชาวิทยาศาสตร์</label>
+            <input type="number" class="form-control" id="scienceScore" placeholder="กรอกคะแนนวิชาวิทยาศาสตร์ (0-100)" min="0" max="100" required>
+        </div>
+
+        <!-- วิชาภาษาอังกฤษ -->
+        <div class="form-group">
+            <label for="englishScore">คะแนนวิชาภาษาอังกฤษ</label>
+            <input type="number" class="form-control" id="englishScore" placeholder="กรอกคะแนนวิชาภาษาอังกฤษ (0-100)" min="0" max="100" required>
+        </div>
+
+        <!-- ปุ่มคำนวณเกรด -->
+        <button type="submit" class="btn btn-primary btn-block">คำนวณเกรด</button>
+        <button type="reset" class="btn btn-secondary btn-block mt-2">รีเซ็ตข้อมูล</button>
+    </form>
+
+    <!-- ผลลัพธ์การคำนวณ -->
+    <div id="result" class="mt-4" style="display: none;">
+        <h4>ผลการคำนวณ:</h4>
+        <p><strong>วิชาคณิตศาสตร์:</strong> <span id="mathGrade"></span></p>
+        <p><strong>วิชาวิทยาศาสตร์:</strong> <span id="scienceGrade"></span></p>
+        <p><strong>วิชาภาษาอังกฤษ:</strong> <span id="englishGrade"></span></p>
+        <p><strong>คะแนนเฉลี่ย:</strong> <span id="averageScore"></span></p>
+    </div>
+</div>
+
+<!-- เรียกใช้ Bootstrap JS และ jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- สคริปต์สำหรับคำนวณเกรด -->
+<script>
+    // ฟังก์ชันคำนวณเกรด
+    function calculateGrade(score) {
+        if (score >= 80) {
+            return 'A';
+        } else if (score >= 70) {
+            return 'B';
+        } else if (score >= 60) {
+            return 'C';
+        } else if (score >= 50) {
+            return 'D';
+        } else {
+            return 'F';
+        }
+    }
+
+    // ฟังก์ชันคำนวณคะแนนเฉลี่ย
+    function calculateAverage(math, science, english) {
+        return ((math + science + english) / 3).toFixed(2); // คำนวณเฉลี่ยและจำกัดทศนิยม 2 ตำแหน่ง
+    }
+
+    // การจับเหตุการณ์เมื่อคลิกปุ่มคำนวณ
+    document.getElementById('gradeForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // ดึงค่าคะแนนจากฟอร์ม
+        const mathScore = parseFloat(document.getElementById('mathScore').value);
+        const scienceScore = parseFloat(document.getElementById('scienceScore').value);
+        const englishScore = parseFloat(document.getElementById('englishScore').value);
+
+        // คำนวณเกรดแต่ละวิชา
+        const mathGrade = calculateGrade(mathScore);
+        const scienceGrade = calculateGrade(scienceScore);
+        const englishGrade = calculateGrade(englishScore);
+
+        // คำนวณคะแนนเฉลี่ย
+        const averageScore = calculateAverage(mathScore, scienceScore, englishScore);
+
+        // แสดงผลลัพธ์การคำนวณ
+        document.getElementById('mathGrade').innerText = mathGrade;
+        document.getElementById('scienceGrade').innerText = scienceGrade;
+        document.getElementById('englishGrade').innerText = englishGrade;
+        document.getElementById('averageScore').innerText = averageScore;
+
+        // แสดงผลลัพธ์
+        document.getElementById('result').style.display = 'block';
+    });
+</script>
+
+</body>
+</html>
