@@ -1,0 +1,20 @@
+{
+  "name": "automate",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cy:open": "cypress open"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cypress": "^14.1.0",
+    "prettier": "^3.5.3"
+  },
+  "devDependencies": {
+    "cypress-real-events": "^1.14.0"
+  }
+}
