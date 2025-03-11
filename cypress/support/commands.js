@@ -23,3 +23,25 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+// import cypress = require("cypress")
+
+Cypress.Commands.add('LoginPrior', (username, password) => {
+    cy.get('.email-section').type(username)
+    cy.get('.password-section').type(password)
+    cy.get('[type=submit]').click()
+  })
+
+Cypress.Commands.add('ProfileMK5', () => {
+  cy.get('div.wrap-tool-bar div.flex.flex-col.items-end>:nth-child(1)').eq(0).click()
+  cy.get('div.wrap-custom-radio-base-layout-class div.flex.flex-row.items-center.justify-between.pl-6.relative.ng-star-inserted').eq(1).click()
+})
+
+  
+Cypress.Commands.add('clickDropdownFrom', () =>{
+  cy.get(dropdownFrom).click()
+})
+
+Cypress.Commands.add('chooseBank', (bank) =>{
+  cy.get('[role="listbox"] .mdc-list-item__primary-text .flex.flex-col.w-full p').contains(bank).click();
+})
