@@ -24,7 +24,7 @@ describe('template spec', () => {
   })
 
   it('Change Profile',()=>{
-    ChooseMaker('MAKER 2')
+    ChooseMaker('MAKER 3')
     ChangeProfile('MK Suki 2')
   })
 
