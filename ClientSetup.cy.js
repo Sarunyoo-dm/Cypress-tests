@@ -15,15 +15,11 @@ describe('template spec', () => {
     
     
   
-    it('Entry Clientsetup', () => {
+    it('BAYtoBAY', () => {
       ChooseMaker('MAKER 2')
       SearchClient('Laza','LAZADA');
-      UserlimitSetup()
-      AccountSetup()
-      Inhouse()
-      AccountMatching()
-      Loghistory()
-      cy.log('เปิดทุกแท็บได้')
+      BAYtoBAY();
+      cy.log('เลือก UAM')
     })
 
 })

@@ -1,6 +1,6 @@
 import 'cypress-real-events'
-import * as functions from '../utils/function';
-import * as variables from '../utils/variables';
+import * as functions from '../../utils/Quickpayfunction';
+import * as variables from '../../utils/variables';
 Object.assign(global,functions)
 Object.assign(global,variables)
 //import { KrungsriTransfer,Openwaitapprove,History,KrungsiMakeTxn,CancelTxnfirst,OtherbankTransfer,OtherMakeTxn} from '../utils/function'
@@ -11,10 +11,32 @@ Object.assign(global,variables)
  describe('Visit Quickpay ', () => {
 
     beforeEach(() => {
-        cy.visit('cypress/e2e/QuickPayment.html')
-        })
+      // Step 1: เข้าหน้า Auth URL ก่อน
+      cy.visit('https://qpayment.tbs.prior-dev.app/', {
+        auth: {
+          username: 'cms',
+          password: '5YuhJT3KU8ib'
+        }
+      });
+      // Step 2: กลับมาหน้า HTML ที่อยู่ในเครื่อง
+      cy.visit('../../../cypress/e2e/Cypress-tests/QuickPayment_PRIOR_SAME_PAGE.html');
+      
+      cy.viewport(1440, 900);
+      cy.window().then((win) => {
+        cy.stub(win, 'open').as('windowOpen');
+      }); // ใช้เพื่อปิด popup 
+
+
+
+
+    })
       //KrungsiMakeTxn(3);
       //OtherMakeTxn(5);
+
+    it('เปลี่ยน Profile' , () => {
+      cy.contains('MAKER 4').click()
+      cy.log('Profike MK2')
+    })
     
     it.skip('โอนเงินกรุงศรีและยกเลิกรายการด้วย Ref.', () => {
         KrungsriTransfer();
@@ -46,14 +68,14 @@ Object.assign(global,variables)
       })
         cy.get('tbody.ng-star-inserted tr>:nth-child(1)>:nth-child(1) div.custom-checkbox-class [type="checkbox"]').eq(0).check()
         })
-    it.skip('เช็ควันที่ default',() =>{
+
+    it('เช็ควันที่ default',() =>{
       const today = new Date().toLocaleDateString('en-GB', { 
         day: '2-digit', 
         month: '2-digit', 
         year: 'numeric' 
       });
-      History();
-      cy.ProfileMK5()
+      OpenHistory();
       cy.get('button.krungsri-con-bold.btn-primary.btn-lg.w-btn-lg').click() // กดปุ่มคัดกรอง
      // cy.get('.cdk-overlay-container .mdc-dialog__container .mat-mdc-dialog-content.mdc-dialog__content custom-datepicker>:nth-child(1)>:nth-child(2)')
      // .eq(0).click().log('datefrom') //V1
@@ -90,9 +112,9 @@ Object.assign(global,variables)
       CancelTxnfirst();
     })
 
-    it('โอนเงินต่างธนาคาร' , () =>{
+    it.only('โอนเงินต่างธนาคาร' , () =>{
       OtherbankTransfer() // โอนแบบต่างธนาคาร
-      cy.ProfileMK5()
+     // cy.ProfileMK5()
       clickDropdownFrom() // คลิ๊ก dropdown บัญชี From
       chooseAcctFrom(accountFrom) // คลิ๊กบัญชีจาก
       cy.get('div.row-start-2 p').should('contain.text' , accountFrom).log('บัญชีตรงกับที่เลือก') // ตรวจสอบเลขบัญชีที่เลือกว่าแสดงในหน้าจอถูกต้อง
@@ -100,7 +122,7 @@ Object.assign(global,variables)
       //cy.chooseBank('กรุงไทย').log('เลือกกรุงไทย') // ถ้าทำเป็น commands จะสามารถ chain กับ command ตัวอื่นได้
       chooseBank('กสิกร') // เลือกธนาคาร
       inputOTHERacct(accountTo) // ใส่เลขบัญชี accounto
-      inputAmt(55) // ใส่จำนวนเงิน
+      inputAmt(115) // ใส่จำนวนเงิน
       clickNext() // คลิ๊กปุ่มถัดไป
       clickConfirm() // scroll มาปุ่มยืนยันและคลิ๊ก 
       clickOK() // กลับมาหน้ากรอกข้อมูลอีกครั้ง
@@ -109,8 +131,7 @@ Object.assign(global,variables)
 
     it('โอนเงินกรุงศรี', () =>{
       KrungsriTransfer()
-      cy.ProfileMK5()
-      clickDropdownFrom() // คลิ๊ก dropdown บัญชี From
+      clickDropdownFromBay() // คลิ๊ก dropdown บัญชี From
       chooseAcctFrom(accountFrom) // คลิ๊กบัญชีจาก
       cy.get('div.row-start-2 p').should('contain.text' , accountFrom).log('บัญชีตรงกับที่เลือก') // ตรวจสอบเลขบัญชีที่เลือกว่าแสดงในหน้าจอถูกต้อง
       inputBAYacct(accountTo) // ใส่เลขบัญชี accounto
@@ -119,20 +140,19 @@ Object.assign(global,variables)
       clickConfirm() // scroll มาปุ่มยืนยันและคลิ๊ก 
       clickOK() // กลับมาหน้ากรอกข้อมูลอีกครั้ง
       cy.log('โอนเงินสำเร็จ')
-      Openwaitapprove()
-
     })
 
  
-    it.only('Filter Reject',()=>{
+    it('Filter Reject',()=>{
       let year_from = '2025'
       let month_from = 'ม.ค.'
       let year_to = '2025'
       let month_to = 'ม.ค.'
       let date_from = '1'
       let date_to = '30'
-      History();
-      cy.ProfileMK5()
+      OpenHistory()
+     // cy.ProfileMK5()
+      cy.get('.flex.flex-row.items-center.max-h-full .ng-star-inserted').click() // ปิด hambergur
       cy.get('button.krungsri-con-bold.btn-primary.btn-lg.w-btn-lg').click() // กดปุ่มคัดกรอง
       cy.get('app-dropdown-image mat-form-field mat-select .ng-tns-c1771602899-21.ng-star-inserted p')
       .click()
